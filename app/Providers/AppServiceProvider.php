@@ -12,7 +12,17 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+          // Liaison du Repository
+        $this->app->bind(
+            TicketRepositoryInterface::class,
+            TicketRepositoryImplementation::class
+        );
+
+        // Liaison du Service
+        $this->app->bind(
+            TicketInterfaceService::class,
+            TaskImplementationService::class
+        );
     }
 
     /**
