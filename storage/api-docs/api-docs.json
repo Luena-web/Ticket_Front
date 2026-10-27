@@ -1,0 +1,40 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API REST de Gestion de Tickets Assistance",
+        "description": "Documentation interactive de l'API d'assistance de notre fil rouge.",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://127.0.0",
+            "description": "Serveur API Local V1"
+        }
+    ],
+    "paths": {
+        "/tickets": {
+            "get": {
+                "tags": [
+                    "Tickets"
+                ],
+                "summary": "Récupérer tous les tickets de support",
+                "description": "Retourne une liste complète de tous les tickets accompagnés de l'auteur",
+                "operationId": "d06b365b5c0fa96398cfcbca7f416b25",
+                "responses": {
+                    "200": {
+                        "description": "Liste des tickets récupérée avec succès"
+                    },
+                    "500": {
+                        "description": "Erreur interne du serveur"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Tickets",
+            "description": "Tickets"
+        }
+    ]
+}

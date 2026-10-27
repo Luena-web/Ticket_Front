@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('utilisateur_id')->constrained('utilisateurs')->onDelete('cascade');
             
-            $table->enum('priority', ['low', 'medium', 'high'])->default('medium');
-            $table->enum('status', ['non resolu', 'en cours', 'resolu'])->default('non resolu');
+            $table->enum('priorite', ['faible', 'moyenne', 'elevee'])->default('moyenne');
+            $table->enum('statut', ['non resolu', 'en cours', 'resolu'])->default('non resolu');
             
             $table->string('titre');
-            $table->text('description'); 
+            $table->string('description'); 
             $table->timestamps();
         });
     }
