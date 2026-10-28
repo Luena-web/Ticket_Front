@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resource;
 use Illuminate\Http\Request;
 
 
@@ -15,7 +15,9 @@ class TicketResource extends JsonResource
             'titre' => $this->titre,
             'description' => $this->description,
             'statut' => $this->statut,
+             'priorite' => $this->priorite,
             'enregistrer' => $this->created_at?->format('d/m/Y'),
+            'commentaires' => $this->whenLoaded('commentaires'),
         ];
     }
 }

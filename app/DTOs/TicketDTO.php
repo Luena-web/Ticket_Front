@@ -23,7 +23,9 @@ class TicketDTO
             titre: $request->validated('titre'),
             description: $request->validated('description'),
             utilisateur_id: auth()->id() ?? 1, 
-            priorite: $request->validated('priorite', 'moyenne'),
+            priorite: $request->validated('priorite', 'moyenne','faible'),
+            statut: $request->validated('non resolu', 'en cours','resolu'),
+
         );
     }
 
@@ -37,6 +39,8 @@ class TicketDTO
             'description'    => $this->description,
             'utilisateur_id' => $this->utilisateur_id, 
             'priorite'       => $this->priorite,
+            'statut'       => $this->statut,
+
         ];
     }
 }

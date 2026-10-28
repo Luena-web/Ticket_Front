@@ -22,6 +22,8 @@ class TicketRepositoryImplementation implements TicketRepositoryInterface
     public function create(array $data)
     {
         return Ticket::create($data);
+ // Déclenchement automatique d'envoi de e-mail à tout le monde
+    event(new TicketCreatedEvent($ticket));
     }
 
     public function update(int $id, array $data)

@@ -1,18 +1,26 @@
 <?php
 
 namespace App\Http\Controllers;
+use OpenApi\Attributes as OA;
 
-/**
- * @OA\Info(
- *     title="API REST de Gestion de Tickets Assistance",
- *     version="1.0.0",
- *     description="Documentation interactive de l'API d'assistance de notre fil rouge."
- * )
- * @OA\Server(
- *     url="http://127.0.0",
- *     description="Serveur API Local V1"
- * )
- */
+
+#[OA\Info(
+    version: "1.0.0",
+    description: "Documentation interactive de l'API d'assistance de notre fil rouge",
+    title: "API REST de Gestion de Tickets Assistance"
+)]
+#[OA\Server(
+    url: 'http://localhost:8000/api',
+    description: 'Serveur Local'
+)]
+#[OA\SecurityScheme(
+    securityScheme: "bearerAuth",
+    type: "http",
+    name: "Authorization",
+    in: "header",
+    scheme: "bearer",
+    bearerFormat: "JWT"
+)]
 abstract class Controller
 {
     // ...

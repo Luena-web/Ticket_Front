@@ -9,17 +9,12 @@ use App\Http\Requests\createTicketresquest;
 use App\Http\Requests\UpdateTicketRequest;
 use App\DTOs\TicketDTO;
 use Illuminate\Http\JsonResponse;
+use App\Htpp\Resource\TicketResource;
 use OpenApi\Attributes as OA;
 
-#[OA\Info(
-    title: "API REST de Gestion de Tickets Assistance",
-    version: "1.0.0",
-    description: "Documentation de l'API de Gestion de tickets."
-)]
-#[OA\Server(
-    url: "http://127.0.0",
-    description: "Serveur API Local V1"
-)]
+
+#[OA\Tag(name: 'Tickets', description: 'Gestion des tickets de l\'API')]
+
 class TicketController extends Controller
 {
     public function __construct(
@@ -42,7 +37,9 @@ class TicketController extends Controller
 
         return response()->json([
             'success' => true,
-            'data'    => $tickets
+           'data'    => $tickets
+           //utilisation de Resource pour formater les datas à envoyer à user
+             // 'data'=>  TicketResource::collection($tickets)
         ], 200);
     }
 

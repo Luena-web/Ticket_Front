@@ -2,13 +2,13 @@
     "openapi": "3.0.0",
     "info": {
         "title": "API REST de Gestion de Tickets Assistance",
-        "description": "Documentation de l'API de Gestion de tickets.",
+        "description": "Documentation interactive de l'API d'assistance de notre fil rouge",
         "version": "1.0.0"
     },
     "servers": [
         {
-            "url": "http://127.0.0",
-            "description": "Serveur API Local V1"
+            "url": "http://localhost:8000/api",
+            "description": "Serveur Local"
         }
     ],
     "paths": {
@@ -168,10 +168,21 @@
             }
         }
     },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "name": "Authorization",
+                "in": "header",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    },
     "tags": [
         {
             "name": "Tickets",
-            "description": "Tickets"
+            "description": "Gestion des tickets de l'API"
         }
     ]
 }

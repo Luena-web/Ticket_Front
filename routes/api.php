@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Http\Request;
- use App\Http\Controllers\api\v1\TicketController;
+use App\Http\Controllers\api\v1\TicketController;
+use App\Http\Controllers\api\v1\CommentaireController;
+
 use Illuminate\Support\Facades\Route;
 
 Route::get('/user', function (Request $request) {
@@ -14,6 +16,10 @@ Route::post('/v1/tickets', [TicketController::class, 'store']);
 Route::put('/v1/tickets/{id}', [TicketController::class, 'update']);
 Route::patch('/v1/tickets/{id}/priorite', [TicketController::class, 'priorite']);
 Route::patch('/v1/tickets/{id}/statut', [TicketController::class, 'statut']);
+Route::delete('/v1/tickets/{id}', [TicketController::class, 'destroy']);
+
+Route::post('/v1/tickets/{id}/commentaires', [CommentaireController::class, 'store']);
+
 
 
 
