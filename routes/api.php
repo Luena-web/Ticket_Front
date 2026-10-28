@@ -11,7 +11,7 @@ Route::get('/user', function (Request $request) {
 Route::get('/v1/tickets', [TicketController::class, 'index']);
 Route::get('/v1/tickets/{id}', [TicketController::class, 'show']);
 Route::post('/v1/tickets', [TicketController::class, 'store']);
-Route::put('/v1/tickets', [TicketController::class, 'update']);
+Route::put('/v1/tickets/{id}', [TicketController::class, 'update']);
 Route::patch('/v1/tickets/{id}/priorite', [TicketController::class, 'priorite']);
 Route::patch('/v1/tickets/{id}/statut', [TicketController::class, 'statut']);
 

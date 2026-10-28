@@ -2,7 +2,7 @@
     "openapi": "3.0.0",
     "info": {
         "title": "API REST de Gestion de Tickets Assistance",
-        "description": "Documentation interactive de l'API d'assistance de notre fil rouge.",
+        "description": "Documentation de l'API de Gestion de tickets.",
         "version": "1.0.0"
     },
     "servers": [
@@ -18,7 +18,7 @@
                     "Tickets"
                 ],
                 "summary": "Récupérer tous les tickets de support",
-                "description": "Retourne une liste complète de tous les tickets accompagnés de l'auteur",
+                "description": "Retourne la liste complète de tous les tickets accompagnés de leurs auteurs respectifs.",
                 "operationId": "d06b365b5c0fa96398cfcbca7f416b25",
                 "responses": {
                     "200": {
@@ -26,6 +26,143 @@
                     },
                     "500": {
                         "description": "Erreur interne du serveur"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Tickets"
+                ],
+                "summary": "Créer un nouveau ticket d'assistance",
+                "description": "Enregistre un ticket de support en base de données et l'associe à un collaborateur.",
+                "operationId": "f2e71c6a45c488a6539654e3493cdea9",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "titre",
+                                    "description",
+                                    "utilisateur_id"
+                                ],
+                                "properties": {
+                                    "titre": {
+                                        "type": "string",
+                                        "example": "Problème réseau au 1er étage"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Impossible de se connecter au Wi-Fi de l'entreprise depuis ce matin."
+                                    },
+                                    "priorite": {
+                                        "type": "string",
+                                        "example": "elevee",
+                                        "enum": [
+                                            "faible",
+                                            "moyenne",
+                                            "elevee"
+                                        ]
+                                    },
+                                    "utilisateur_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Ticket créé avec succès"
+                    },
+                    "422": {
+                        "description": "Données de validation incorrectes"
+                    }
+                }
+            }
+        },
+        "/tickets/{id}": {
+            "get": {
+                "tags": [
+                    "Tickets"
+                ],
+                "summary": "Afficher le détail d'un ticket",
+                "description": "Retourne les détails d'un ticket spécifique avec l'historique complet de ses commentaires.",
+                "operationId": "b43f333c38eed3466d83d132254c4293",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID du ticket",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Détails du ticket récupérés avec succès"
+                    },
+                    "404": {
+                        "description": "Ticket introuvable"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Tickets"
+                ],
+                "summary": "Mettre à jour un ticket",
+                "description": "Permet de modifier les données d'un ticket (titre, description, priorité ou statut).",
+                "operationId": "d23beab14a57e574b31582145481a9cc",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID du ticket",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ticket mis à jour avec succès"
+                    },
+                    "404": {
+                        "description": "Ticket introuvable"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Tickets"
+                ],
+                "summary": "Supprimer un ticket définitivement",
+                "description": "Supprime un ticket d'assistance de la base de données (Action d'administration).",
+                "operationId": "aecdeaa2791babb476abe0b9dfb12f4b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID du ticket",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ticket supprimé avec succès"
+                    },
+                    "404": {
+                        "description": "Ticket introuvable"
                     }
                 }
             }

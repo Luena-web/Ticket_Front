@@ -1,18 +1,20 @@
 <?php
- namespace App\Services\TicketImplementationService;
- use App\Models\Ticket;
- use App\Services\interfaces\TicketImplementationService;
- use App\Repositories\Interfaces\TicketRepositoryInterface;
 
+namespace App\Services\Implementations;
 
- class TicketImplemnetationService implements TicketInterfaceService{
+use App\Services\Interfaces\TicketInterfaceService;
+use App\Repositories\Interfaces\TicketRepositoryInterface;
 
-  public function __construct(
-        private TickekRepositoryInterface $ticketkRepository//constructeur
+class TicketImplementationService implements TicketInterfaceService
+{
+    public function __construct(
+        private TicketRepositoryInterface $ticketRepository
     ) {}
-    public function getAll ()
+
+    public function getAll()
     {
-        return this->ticketRepository->getAll();
+        
+        return $this->ticketRepository->getAll();
     }
 
     public function findById(int $id)
@@ -32,17 +34,17 @@
 
     public function delete(int $id)
     {
-        $ticket = $this->ticketRepository->findById($id);
-        if ($ticket) {
-            return $this->ticketRepository->delete($id);
-        }
-        return false; 
+        return $this->ticketRepository->delete($id);
     }
-    
-    
-    
- }
 
+    public function updatePriorite(int $id, string $priorite)
+{
+    return $this->ticketRepository->update($id, ['priorite' => $priorite]);
+}
 
+    public function updateStatut(int $id, string $statut)
+{
+    return $this->ticketRepository->update($id, ['statut' => $statut]);
+}
 
-?>
+}

@@ -24,10 +24,10 @@ class UpdateTicketRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'titre'=>'somtimes|required|string',
-            'description'=>'somtimes|required|string',
-            'priorite' => ['sometimes', 'required', Rule::in(['low', 'medium', 'high'])],
-            'status' => ['sometimes', 'required', Rule::in(['non resolu', 'en cours', 'resolu'])],
+            'titre'=>'sometimes|required|string',
+            'description'=>'sometimes|required|string',
+            'priorite' => ['sometimes', 'required', Rule::in(['faible', 'moyenne', 'elevee'])],
+            'statut' => ['sometimes', 'required', Rule::in(['non resolu', 'en cours', 'resolu'])],
 
         ];
     }

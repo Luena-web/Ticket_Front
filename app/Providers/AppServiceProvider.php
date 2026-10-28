@@ -4,6 +4,10 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
+use App\Repositories\Interfaces\TicketRepositoryInterface;
+use App\Repositories\Implementations\TicketRepositoryImplementation;
+use App\Services\Interfaces\TicketInterfaceService;
+use App\Services\Implementations\TicketImplementationService;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -21,7 +25,7 @@ class AppServiceProvider extends ServiceProvider
         // Liaison du Service
         $this->app->bind(
             TicketInterfaceService::class,
-            TaskImplementationService::class
+            TicketImplementationService::class
         );
     }
 

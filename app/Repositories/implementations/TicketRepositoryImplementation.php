@@ -7,14 +7,16 @@ use App\Repositories\Interfaces\TicketRepositoryInterface;
 
 class TicketRepositoryImplementation implements TicketRepositoryInterface
 {
+   
     public function getAll()
     {
-        return Ticket::all();
+        return Ticket::with('utilisateur')->latest()->get();
     }
 
+  
     public function findById(int $id)
     {
-        return Ticket::find($id);
+        return Ticket::with(['utilisateur', 'commentaires.auteur'])->find($id);
     }
 
     public function create(array $data)
@@ -24,20 +26,20 @@ class TicketRepositoryImplementation implements TicketRepositoryInterface
 
     public function update(int $id, array $data)
     {
-        $ticket = $this->findById($id);
+        $ticket = Ticket::find($id);  
         if ($ticket) {
             $ticket->update($data);
+            $ticket->refresh();
         }
         return $ticket;
     }
 
     public function delete(int $id)
     {
-        $ticket = $this->findById($id);
+        $ticket = Ticket::find($id);
         if ($ticket) {
             return $ticket->delete();
         }
         return false; 
     }
-   
 }
