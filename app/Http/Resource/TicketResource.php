@@ -2,6 +2,7 @@
 
 namespace App\Http\Resource;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 
 
@@ -18,6 +19,7 @@ class TicketResource extends JsonResource
              'priorite' => $this->priorite,
             'enregistrer' => $this->created_at?->format('d/m/Y'),
             'commentaires' => $this->whenLoaded('commentaires'),
+            'utilisateur' => $this->whenLoaded('utilisateur'),
         ];
     }
 }

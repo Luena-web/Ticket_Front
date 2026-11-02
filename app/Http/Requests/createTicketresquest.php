@@ -27,8 +27,8 @@ class createTicketresquest extends FormRequest
             'titre'=>'required|string|max:255',
             'description'=>'required|string|max:255',
             'priorite'=>['required', Rule::in(['faible', 'moyenne', 'elevee'])],
-   //         'id_utilisateur'=>'required|integer|exists:utilisateurs,id'
-        ];
+           'utilisateur_id' => 'sometimes|integer|exists:utilisateurs,id',        
+];
     }
     public function messages(): array{
         return [

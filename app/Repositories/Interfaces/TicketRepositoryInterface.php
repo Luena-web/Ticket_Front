@@ -14,5 +14,5 @@ interface TicketRepositoryInterface{
 
     public function delete(int $id);
 }
-?>
+
 

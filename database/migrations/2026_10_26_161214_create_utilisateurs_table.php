@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nom');
             $table->string('prenom');
-            $table->string('email')->unique();
+            $table->string('email')->unique();// Pour éviter les doublons
             $table->enum('role', [ 'agent', 'utilisateur'])->default('utilisateur');
             $table->timestamps();
         });

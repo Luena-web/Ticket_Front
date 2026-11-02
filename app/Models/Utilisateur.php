@@ -3,16 +3,19 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Relations\HasMany; 
 class Utilisateur extends Model
 
 {
+     use HasApiTokens;
    protected $table = 'utilisateurs';
     protected $fillable = [
         'nom',
         'prenom',
         'email',
-        'role'
+        'role',
+        'password'
     ];
 // un user peut écrire créer un ou  plusieurs tickets
     public function tickets(): HasMany

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\api\v1;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
@@ -7,9 +6,12 @@ use Illuminate\Http\Request;
 use App\Services\Interfaces\TicketInterfaceService;
 use App\Http\Requests\createTicketresquest;
 use App\Http\Requests\UpdateTicketRequest;
+use App\Models\Utilisateur;
 use App\DTOs\TicketDTO;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\JsonResponse;
-use App\Htpp\Resource\TicketResource;
+use App\Http\Resource\TicketResource;
+
 use OpenApi\Attributes as OA;
 
 
@@ -37,9 +39,9 @@ class TicketController extends Controller
 
         return response()->json([
             'success' => true,
-           'data'    => $tickets
+           // 'data'    => $tickets
            //utilisation de Resource pour formater les datas à envoyer à user
-             // 'data'=>  TicketResource::collection($tickets)
+             'data'=>  TicketResource::collection($tickets)
         ], 200);
     }
 
@@ -65,20 +67,38 @@ class TicketController extends Controller
             new OA\Response(response: 422, description: "Données de validation incorrectes")
         ]
     )]
-    public function store(createTicketresquest $request): JsonResponse
-    {
-        // Transformation des données de Formrequest  en DTO
-        $ticketDTO = TicketDTO::fromRequest($request);
 
-        // Appel de la couche Service pour exécuter la logique de création
-        $ticket = $this->ticketService->create($ticketDTO->toArray());
+public function store(createTicketresquest $request): JsonResponse
+{
+    try {
+        // Transformation des données de Formrequest en DTO
+        $ticketDTO = TicketDTO::fromRequest($request);
+        $ticketData = $ticketDTO->toArray();
+        
+        if (!$request->user()) {
+            return response()->json(['success' => false, 'message' => 'Utilisateur non authentifié.'], 401);
+        }
+        
+        $ticketData['utilisateur_id'] = $request->user()->id;
+
+        // Appel de la couche Service
+        $ticket = $this->ticketService->create($ticketData);
 
         return response()->json([
             'success' => true,
             'message' => 'Ticket créé avec succès.',
-            'data'    => $ticket->load('utilisateur')
+            'data'    => $ticket ? $ticket->load('utilisateur') : null
         ], 201);
+
+    } catch (\Exception $e) {
+        // En cas de bug dans le Service ou en BDD, on attrape l'erreur proprement ici
+        return response()->json([
+            'success' => false,
+            'message' => 'Erreur lors de la création du ticket.',
+            'error'   => $e->getMessage()
+        ], 500);
     }
+}
 
     #[OA\Get(
         path: "/tickets/{id}",
@@ -211,5 +231,6 @@ class TicketController extends Controller
             'data'    => $ticket
         ], 200);
     }
+
 
 }

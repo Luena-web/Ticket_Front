@@ -12,7 +12,6 @@ class ticket extends Model
      'titre',
     'description',
     'status',
-    'priority',
     'utilisateur_id',
     'statut',
     'priorite'
